@@ -253,15 +253,15 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     // safe to call from any thread
 
     public boolean isVibrationEnabled() {
-        return (Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
+        return (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
     }
 
     public void vibrateTile(int duration) {
         if (!isVibrationEnabled()) { return; }
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator())
-                mVibrator.vibrate(VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE));
+        if (mVibrator != null && mVibrator.hasVibrator()) {
+            mVibrator.vibrate(VibrationEffect.createOneShot(duration,
+                    VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 
@@ -285,7 +285,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 getInstanceId());
         mQSLogger.logTileClick(mTileSpec, mStatusBarStateController.getState(), mState.state);
         mHandler.sendEmptyMessage(H.CLICK);
-        vibrateTile(45);
+        vibrateTile(75);
     }
 
     public void secondaryClick() {
@@ -297,6 +297,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
         mQSLogger.logTileSecondaryClick(mTileSpec, mStatusBarStateController.getState(),
                 mState.state);
         mHandler.sendEmptyMessage(H.SECONDARY_CLICK);
+        vibrateTile(75);
     }
 
     public void longClick() {
@@ -312,7 +313,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 mContext,
                 Prefs.Key.QS_LONG_PRESS_TOOLTIP_SHOWN_COUNT,
                 QuickStatusBarHeader.MAX_TOOLTIP_SHOWN_COUNT);
-        vibrateTile(45);
+        vibrateTile(100);
     }
 
     public LogMaker populate(LogMaker logMaker) {
