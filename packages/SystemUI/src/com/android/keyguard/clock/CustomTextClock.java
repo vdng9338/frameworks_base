@@ -212,7 +212,7 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
 
     private int getLockClockFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CUSTOM_TEXT_CLOCK_FONTS, 32);
+                Settings.System.CUSTOM_TEXT_CLOCK_FONTS, 0);
     }
 
     private void refreshLockFont() {
