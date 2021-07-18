@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2020 The Projet Xtended
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">Copier l'URL du journal de crash</string>
+    <string name="url_copy_success">URL copiée</string>
+    <string name="url_copy_failed">Erreur lors de l'upload du journal sur dogbin</string>
+
+    <!-- Vendor mismatch fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">Votre image vendeur ne correspond pas au système. Veuillez flasher l'image vendeur <xliff:g id="string">%s</xliff:g> pour votre appareil.</string>
+
+    <!-- AOKP custom system animations -->
+    <string name="animation_fade">Fondu</string>
+    <string name="animation_slide_right">Glissement par la droite</string>
+    <string name="animation_slide_left">Glissement par la gauche</string>
+    <string name="animation_slide_right_no_fade">Glissement par la droite (sans fondu)</string>
+    <string name="animation_slide_left_no_fade">Glissement par la gauche (sans fondu)</string>
+    <string name="animation_slide_up">Glissement par le bas</string>
+    <string name="animation_slide_down">Glissement par le haut</string>
+    <string name="animation_default">Par défaut</string>
+    <string name="animation_translucent">Translucide</string>
+    <string name="animation_grow_shrink">Agrandissement (haut)</string>
+    <string name="animation_grow_shrink_center">Agrandissement (centre)</string>
+    <string name="animation_grow_shrink_bottom">Agrandissement (bas)</string>
+    <string name="animation_grow_shrink_left">Agrandissement (gauche)</string>
+    <string name="animation_grow_shrink_right">Agrandissement (droite)</string>
+    <string name="animation_random">Aléatoire</string>
+    <string name="action_null">Aucune</string>
+    <string name="animation_ethans">Ethans</string>
+
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Les appels et notifications sonnent</string>
+
+    <!-- Gaming mode -->
+    <string name="notification_channel_gaming">Mode gaming</string>
+    <string name="gaming_mode_notification_title">Mode gaming activé</string>
+    <string name="gaming_mode_notification_content">Appuyer pour désactiver le mode gaming</string>
+    <string name="gaming_mode_enabled_toast">Mode gaming activé</string>
+    <string name="gaming_mode_disabled_toast">Mode gaming désactivé</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_accessFontManager">accéder au gestionnaire de polices</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_accessFontManager">Autorise une application à accéder au gestionnaire de polices.</string>
+    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+    <string name="fontservice_incompatible_font">Le pack de polices que vous avez installé est incompatible car il ne contient pas le fichier fonts.xml. Veuillez contacter le développeur du pack pour obtenir de l'aide.</string>
+
+    <!-- Alert slider proc nodes paths. -->
+    <string name="alert_slider_state_path"></string>
+    <string name="alert_slider_uevent_match_path"></string>
+
+    <!-- MicroG -->
+    <string name="permlab_fakePackageSignature">Usurper la signature de package</string>
+    <!-- Description of an application permission, listed so the user can choose whether
+         they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Autorise l'application à prétendre être une application différente. Des applications malicieuses pourraient utiliser cette permission pour accéder à des données privées d'autres applications. Parmi les utilisations légitimes, on retrouve les émulateurs prétendant être ce qu'ils émulent. Accordez cette permission avec prudence !</string>
+    <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgrouplab_fake_package_signature">Usurper la signature de package</string>
+    <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgroupdesc_fake_package_signature">autoriser l'usurpation de signature de package</string>
+    <!-- Message shown to the user when the apps requests permission from this group. If ever possible this should stay below 80 characters (assuming the parameters takes 20 characters). Don't abbreviate until the message reaches 120 characters though. [CHAR LIMIT=120] -->
+    <string name="permgrouprequest_fake_package_signature">Autoriser
+        &lt;b&gt;<xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b&gt; à usurper la signature de package ?</string>
+
+</resources>

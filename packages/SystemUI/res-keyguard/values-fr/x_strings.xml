@@ -15,10 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="clock_title_default_bold">Default (bold)</string>
+    <string name="clock_title_default_bold">Par défaut (gras)</string>
     <string name="clock_title_samsung" translatable="false">Samsung</string>
-    <string name="clock_title_samsung_bold">Samsung (bold)</string>
-    <string name="clock_title_samsung_accent">Sammy (colored)</string>
+    <string name="clock_title_samsung_bold">Samsung (gras)</string>
+    <string name="clock_title_samsung_accent">Sammy (couleurs)</string>
 
     <!-- Spidey Analog clock -->
     <string name="clock_title_spidey" translatable="false">Spidey</string>
@@ -35,21 +35,21 @@
     <!-- MNML clock -->
     <string name="clock_title_mnml_box" translatable="false">MNML\'s Box</string>
     <string name="clock_title_mnml_minimal" translatable="false">MNML\'s Minimal</string>
-    <string name="date_long_title_today">Today is %s</string>
+    <string name="date_long_title_today">Nous sommes le %s</string>
 
     <!-- Clock required strings -->
     <string name="sticker_tag_clock_title">Sticker Tag</string>
-    <string name="custom_clock_hours_title">Hours</string>
+    <string name="custom_clock_hours_title">Heures</string>
     <string name="custom_clock_minutes_title">Minutes</string>
-    <string name="custom_clock_seconds_title">Seconds</string>
-    <string name="custom_clock_day_title">Day</string>
-    <string name="custom_clock_month_title">Month</string>
-    <string name="custom_clock_year_title">Year</string>
-    <string name="ide_java_comment">Show the date for once, the user is curious</string>
-    <string name="salute_fallback">Hey there</string>
-    <string name="salute_morning">Good morning</string>
-    <string name="salute_afternoon">Good afternoon</string>
-    <string name="salute_evening">Good evening</string>
-    <string name="salute_night">Good night</string>
-    <string name="salute_sleep">Go to Sleep</string>
+    <string name="custom_clock_seconds_title">Secondes</string>
+    <string name="custom_clock_day_title">Jour</string>
+    <string name="custom_clock_month_title">Mois</string>
+    <string name="custom_clock_year_title">Année</string>
+    <string name="ide_java_comment">Afficher la date une fois, l'utilisateur est curieux</string>
+    <string name="salute_fallback">Salut</string>
+    <string name="salute_morning">Bonjour</string>
+    <string name="salute_afternoon">Bonjour</string>
+    <string name="salute_evening">Bonsoir</string>
+    <string name="salute_night">Bonne nuit</string>
+    <string name="salute_sleep">Allez vous coucher</string>
 </resources>
