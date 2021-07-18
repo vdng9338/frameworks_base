@@ -240,7 +240,7 @@
     <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - Notifications pop-up en pause pendant <xliff:g id="number">%2$d</xliff:g> minutes</string>
 
     <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Forcer l'arrêt ?</string>
+    <string name="force_stop_dlg_title">Forcer l\'arrêt ?</string>
     <string name="force_stop_dlg_text">Si vous forcez l\'arrêt d\'une application, elle peut se comporter incorrectement.</string>
     <string name="dlg_ok">@android:string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
@@ -269,15 +269,15 @@
     <string name="navbar_editor_summary">Configurer la barre de navigation</string>
 
     <!-- Screen Record -->
-    <string name="screenrecord_stopdot_label">Afficher un point pour arrêter l'enregistrement d'écran</string>
-    <string name="screenrecord_lowquality_label">Qualité d'enregistrement plus faible</string>
-    <string name="screenrecord_longer_timeout_switch_label">Limite de taille de fichier plus élevée\nLimitation de la taille de l'enregistrement à 15 Go</string>
+    <string name="screenrecord_stopdot_label">Afficher un point pour arrêter l\'enregistrement d\'écran</string>
+    <string name="screenrecord_lowquality_label">Qualité d\'enregistrement plus faible</string>
+    <string name="screenrecord_longer_timeout_switch_label">Limite de taille de fichier plus élevée\nLimitation de la taille de l\'enregistrement à 15 Go</string>
 
     <!-- Biometric Dialog - Use Face -->
     <string name="biometric_dialog_button_use_face">Utiliser le visage</string>
 
     <!-- App Lock -->
-    <string name="applock_unlock">Déverrouiller l'application</string>
+    <string name="applock_unlock">Déverrouiller l\'application</string>
 
     <!-- OmniJaws Weather -->
     <string name="omnijaws_service_error">Erreur</string>
@@ -292,18 +292,18 @@
 
     <!-- LS Battery Bar -->
     <string name="tuner_keyguard_show_battery_bar_title">Afficher la barre de batterie</string>
-    <string name="tuner_keyguard_show_battery_bar_summary">Afficher la barre de batterie sur l'Always On Display pendant la charge</string>
+    <string name="tuner_keyguard_show_battery_bar_summary">Afficher la barre de batterie sur l\'Always On Display pendant la charge</string>
     <string name="tuner_keyguard_show_battery_bar_always_title">Toujours afficher la barre de batterie</string>
     <string name="tuner_keyguard_show_battery_bar_always_summary">Toujours afficher la barre de batterie pendant la charge</string>
 
-    <string name="photos_not_allowed">Vous essayez de définir l'image du panneau de réglages rapides avec une application incompatible. Veuillez utiliser l'application de galerie préinstallée ou une autre application de galerie.</string>
+    <string name="photos_not_allowed">Vous essayez de définir l\'image du panneau de réglages rapides avec une application incompatible. Veuillez utiliser l\'application de galerie préinstallée ou une autre application de galerie.</string>
 
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Pixels intelligents</string>
     <string name="quick_settings_smart_pixels_on_power_save">Pixels intelligents activés automatiquement</string>
 
    <!-- Change clockface -->
-    <string name="change_clock_face">Glisser pour changer l'apparence de l'horloge</string>
+    <string name="change_clock_face">Glisser pour changer l\'apparence de l\'horloge</string>
 
     <!-- Gaming mode -->
     <string name="gaming_mode_not_enabled">Mode gaming désactivé dans les paramètres</string>
@@ -329,15 +329,15 @@
     <string name="tristate_rotation_270">Paysage (270°)</string>
 
     <!-- Partial screenshot -->
-    <string name="global_screenshot_selector_capture_description">Prendre une capture d'écran partielle</string>
-    <string name="global_screenshot_selector_cancel_description">Annuler la capture d'écran partielle</string>
+    <string name="global_screenshot_selector_capture_description">Prendre une capture d\'écran partielle</string>
+    <string name="global_screenshot_selector_cancel_description">Annuler la capture d\'écran partielle</string>
 
     <string name="task_helper_app_killed">%1$s a cessé de fonctionner</string>
-    <string name="empty_app_killed">L'application</string>
+    <string name="empty_app_killed">L\'application</string>
 
     <string name="app_picker_dialog_title">Sélectionner une application</string> 
-    <string name="active_edge_app_select_title">Sélectionner l'application</string>
-    <string name="active_edge_activity_select_title">Sélectionner l'activité</string>
+    <string name="active_edge_app_select_title">Sélectionner l\'application</string>
+    <string name="active_edge_activity_select_title">Sélectionner l\'activité</string>
 
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>

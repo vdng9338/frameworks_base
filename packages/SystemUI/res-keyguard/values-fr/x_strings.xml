@@ -45,7 +45,7 @@
     <string name="custom_clock_day_title">Jour</string>
     <string name="custom_clock_month_title">Mois</string>
     <string name="custom_clock_year_title">Année</string>
-    <string name="ide_java_comment">Afficher la date une fois, l'utilisateur est curieux</string>
+    <string name="ide_java_comment">Afficher la date une fois, l\'utilisateur est curieux</string>
     <string name="salute_fallback">Salut</string>
     <string name="salute_morning">Bonjour</string>
     <string name="salute_afternoon">Bonjour</string>
