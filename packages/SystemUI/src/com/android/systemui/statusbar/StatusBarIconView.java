@@ -458,12 +458,12 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         Drawable icon;
         String pkgName = statusBarIcon.pkg;
         mIsSystemUI = pkgName.contains("systemui");
-        try {
+        /*try {
             icon = mIsSystemUI ? statusBarIcon.icon.loadDrawableAsUser(context, userId)
                                : context.getPackageManager().getApplicationIcon(pkgName);
-        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {*/
             icon = statusBarIcon.icon.loadDrawableAsUser(context, userId);
-        }
+        //}
 
         TypedValue typedValue = new TypedValue();
         context.getResources().getValue(R.dimen.status_bar_icon_scale_factor, typedValue, true);
@@ -654,11 +654,11 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
 
     private void initializeDecorColor() {
         if (mNotification != null) {
-            if (mNotification.getPackageName().contains("systemui")) {
+            //if (mNotification.getPackageName().contains("systemui")) {
                 setDecorColor(getContext().getColor(mNightMode
                         ? com.android.internal.R.color.notification_default_color_dark
                         : com.android.internal.R.color.notification_default_color_light));
-            }
+            //}
         }
     }
 
@@ -679,21 +679,21 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
      */
     public void setStaticDrawableColor(int color) {
         if (mNotification == null) return;
-        if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
+        //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             mDrawableColor = color;
             setColorInternal(color);
             updateContrastedStaticColor();
             mIconColor = color;
             mDozer.setColor(color);
-        }
+        //}
     }
 
     private void setColorInternal(int color) {
         if (mNotification == null) return;
-        if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
+        //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             mCurrentSetColor = color;
             updateIconColor();
-        }
+        //}
     }
 
     private void updateIconColor() {
@@ -703,7 +703,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         }
 
         if (mNotification == null) return;
-        if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
+        //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (mCurrentSetColor != NO_COLOR) {
                 if (mMatrixColorFilter == null) {
                     mMatrix = new float[4 * 5];
@@ -718,7 +718,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
             } else {
                 mDozer.updateGrayscale(this, mDozeAmount);
             }
-        }
+        //}
     }
 
     /**
@@ -735,7 +735,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
 
     public void setIconColor(int iconColor, boolean animate) {
         if (mNotification == null) return;
-        if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
+        //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (mIconColor != iconColor) {
                 mIconColor = iconColor;
                 if (mColorAnimator != null) {
@@ -762,12 +762,13 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
                     setColorInternal(iconColor);
                 }
             }
-        }
+        //}
     }
 
     public int getStaticDrawableColor() {
         if (mNotification == null) return mDrawableColor;
-        return mNotification.getPackageName().contains("systemui") /*mIsSystemUI*/ ? mDrawableColor : 0;
+        //return mNotification.getPackageName().contains("systemui") /*mIsSystemUI*/ ? mDrawableColor : 0;
+        return mDrawableColor;
     }
 
     /**
@@ -787,7 +788,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
 
     private void updateContrastedStaticColor() {
         if (mNotification == null) return;
-        if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
+        //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (Color.alpha(mCachedContrastBackgroundColor) != 255) {
                 mContrastedDrawableColor = mDrawableColor;
                 return;
@@ -808,7 +809,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
                         contrastedColor, mCachedContrastBackgroundColor, isDark);
             }
             mContrastedDrawableColor = contrastedColor;
-        }
+        //}
     }
 
     @Override

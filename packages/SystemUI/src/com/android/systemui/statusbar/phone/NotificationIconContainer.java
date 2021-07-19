@@ -803,7 +803,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
                     }
                 }
                 icon.setVisibleState(visibleState, animationsAllowed);
-                if (icon.getStatusBarIcon().pkg.contains("systemui"))
+                //if (icon.getStatusBarIcon().pkg.contains("systemui"))
                     icon.setIconColor(iconColor, needsCannedAnimation && animationsAllowed);
                 if (animate) {
                     animateTo(icon, animationProperties);
@@ -827,10 +827,10 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             super.initFrom(view);
             if (view instanceof StatusBarIconView) {
                 StatusBarIconView icon = (StatusBarIconView) view;
-                if (icon.getStatusBarIcon().pkg.contains("systemui"))
+                //if (icon.getStatusBarIcon().pkg.contains("systemui"))
                     iconColor = ((StatusBarIconView) view).getStaticDrawableColor();
-                else
-                    return;
+                /*else
+                    return;*/
             }
         }
     }
