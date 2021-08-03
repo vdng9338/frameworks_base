@@ -678,7 +678,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
      * transitioning this also immediately sets the color.
      */
     public void setStaticDrawableColor(int color) {
-        if (mNotification == null) return;
+        //if (mNotification == null) return;
         //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             mDrawableColor = color;
             setColorInternal(color);
@@ -689,7 +689,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     }
 
     private void setColorInternal(int color) {
-        if (mNotification == null) return;
+        //if (mNotification == null) return;
         //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             mCurrentSetColor = color;
             updateIconColor();
@@ -702,7 +702,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
             return;
         }
 
-        if (mNotification == null) return;
+        //if (mNotification == null) return;
         //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (mCurrentSetColor != NO_COLOR) {
                 if (mMatrixColorFilter == null) {
@@ -734,7 +734,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     }
 
     public void setIconColor(int iconColor, boolean animate) {
-        if (mNotification == null) return;
+        //if (mNotification == null) return;
         //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (mIconColor != iconColor) {
                 mIconColor = iconColor;
@@ -766,7 +766,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     }
 
     public int getStaticDrawableColor() {
-        if (mNotification == null) return mDrawableColor;
+        //if (mNotification == null) return mDrawableColor;
         //return mNotification.getPackageName().contains("systemui") /*mIsSystemUI*/ ? mDrawableColor : 0;
         return mDrawableColor;
     }
@@ -787,7 +787,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     }
 
     private void updateContrastedStaticColor() {
-        if (mNotification == null) return;
+        //if (mNotification == null) return;
         //if (mNotification.getPackageName().contains("systemui")) { //if (mIsSystemUI) {
             if (Color.alpha(mCachedContrastBackgroundColor) != 255) {
                 mContrastedDrawableColor = mDrawableColor;
