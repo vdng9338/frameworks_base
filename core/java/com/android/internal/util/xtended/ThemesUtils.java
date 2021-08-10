@@ -19,17 +19,40 @@ package com.android.internal.util.xtended;
 import static android.os.UserHandle.USER_SYSTEM;
 
 import android.app.UiModeManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
+import android.database.Cursor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.net.Uri;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.android.internal.util.xtended.clock.ClockFace;
 
 public class ThemesUtils {
 
     public static final String TAG = "ThemesUtils";
+
+    private Context mContext;
+    private UiModeManager mUiModeManager;
+    private IOverlayManager mOverlayManager;
+    private PackageManager pm;
+
+    public ThemesUtils(Context context) {
+        mContext = context;
+        mUiModeManager = context.getSystemService(UiModeManager.class);
+        mOverlayManager = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+        pm = context.getPackageManager();
+    }
 
     // QS Tile Styles
     public static final String[] QS_TILE_THEMES = {
@@ -54,12 +77,17 @@ public class ThemesUtils {
     };
 
      // Switch themes
-    private static final String[] SWITCH_THEMES = {
+    public static final String[] SWITCH_THEMES = {
         "com.android.system.switch.stock", // 0
         "com.android.system.switch.oneplus", // 1
 	"com.android.system.switch.narrow", // 2
         "com.android.system.switch.contained", // 3
         "com.android.system.switch.telegram", // 4
+        "com.android.system.switch.md2", // 5
+        "com.android.system.switch.retro", // 6
+        "com.android.system.switch.oos", // 7
+        "com.android.system.switch.fluid", // 8
+        "com.android.system.switch.android_s", // 9
     };
 
     public static final String[] NAVBAR_STYLES = {
@@ -72,6 +100,30 @@ public class ThemesUtils {
             "com.android.theme.navbar.oneui",
             "com.android.theme.navbar.sammy",
             "com.android.theme.navbar.tecno",
+    };
+
+    // Statusbar Signal icons
+    public static final String[] SIGNAL_BAR = {
+        "org.blissroms.systemui.signalbar_a",
+        "org.blissroms.systemui.signalbar_b",
+        "org.blissroms.systemui.signalbar_c",
+        "org.blissroms.systemui.signalbar_d",
+        "org.blissroms.systemui.signalbar_e",
+        "org.blissroms.systemui.signalbar_f",
+        "org.blissroms.systemui.signalbar_g",
+        "org.blissroms.systemui.signalbar_h",
+    };
+
+    // Statusbar Wifi icons
+    public static final String[] WIFI_BAR = {
+        "org.blissroms.systemui.wifibar_a",
+        "org.blissroms.systemui.wifibar_b",
+        "org.blissroms.systemui.wifibar_c",
+        "org.blissroms.systemui.wifibar_d",
+        "org.blissroms.systemui.wifibar_e",
+        "org.blissroms.systemui.wifibar_f",
+        "org.blissroms.systemui.wifibar_g",
+        "org.blissroms.systemui.wifibar_h",
     };
 
     public static final String[] STATUSBAR_HEIGHT = {
@@ -176,7 +228,7 @@ public class ThemesUtils {
     }
 
     public static void stockSwitchStyle(IOverlayManager om, int userId) {
-        for (int i = 0; i < SWITCH_THEMES.length; i++) {
+        for (int i = 1; i < SWITCH_THEMES.length; i++) {
             String switchtheme = SWITCH_THEMES[i];
             try {
                 om.setEnabled(switchtheme,
@@ -186,4 +238,39 @@ public class ThemesUtils {
             }
         }
     }
+
+    public List<ClockFace> getClocks() {
+        ProviderInfo providerInfo = mContext.getPackageManager().resolveContentProvider("com.android.keyguard.clock",
+                        PackageManager.MATCH_SYSTEM_ONLY);
+
+        Uri optionsUri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_CONTENT)
+                .authority(providerInfo.authority)
+                .appendPath("list_options")
+                .build();
+
+        ContentResolver resolver = mContext.getContentResolver();
+
+        List<ClockFace> clocks = new ArrayList<>();
+        try (Cursor c = resolver.query(optionsUri, null, null, null, null)) {
+            while(c.moveToNext()) {
+                String id = c.getString(c.getColumnIndex("id"));
+                String title = c.getString(c.getColumnIndex("title"));
+                String previewUri = c.getString(c.getColumnIndex("preview"));
+                Uri preview = Uri.parse(previewUri);
+                String thumbnailUri = c.getString(c.getColumnIndex("thumbnail"));
+                Uri thumbnail = Uri.parse(thumbnailUri);
+
+                ClockFace.Builder builder = new ClockFace.Builder();
+                builder.setId(id).setTitle(title).setPreview(preview).setThumbnail(thumbnail);
+                clocks.add(builder.build());
+            }
+        } catch (Exception e) {
+            clocks = null;
+        } finally {
+            // Do Nothing
+        }
+        return clocks;
+    }
+
 }

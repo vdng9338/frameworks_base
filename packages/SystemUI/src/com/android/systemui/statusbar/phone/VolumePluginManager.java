@@ -77,6 +77,9 @@ public class VolumePluginManager extends BroadcastReceiver {
         "co.potatoproject.plugin.volume.oreo",
         "co.potatoproject.plugin.volume.tiled",
         "co.potatoproject.plugin.volume.miui",
+        "co.potatoproject.plugin.volume.oos",
+        "co.potatoproject.plugin.volume.p404",
+        "co.potatoproject.plugin.volume.ssos",
     };
 
     private PluginPrefs mPluginPrefs;
@@ -127,10 +130,16 @@ public class VolumePluginManager extends BroadcastReceiver {
                 ComponentName componentName = new ComponentName(plugin.packageName,
                         plugin.services[0].name);
 
-                if (currentPackageName.equals(plugin.packageName))
-                    mPluginEnabler.setEnabled(componentName);
-                else
+                if (currentPackageName.equals(plugin.packageName)) {
+                    if(mPluginEnabler != null) {
+                        mPluginEnabler.setEnabled(componentName);
+                    } else {
+                        mPluginEnabler = new PluginEnablerImpl(mContext);
+                        mPluginEnabler.setEnabled(componentName);
+                    }
+                } else {
                     mPluginEnabler.setDisabled(componentName, PluginEnabler.DISABLED_MANUALLY);
+                }
 
                 final String pkg = plugin.packageName;
                 final Intent intent = new Intent(PluginManager.PLUGIN_CHANGED,

@@ -34,9 +34,6 @@
     <!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
-    <!-- Device has OnePlus haptic motor -->
-    <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
-
     <!-- Vendor mismatch fingerprint warning -->
     <java-symbol type="string" name="system_error_vendorprint" />
 
@@ -169,6 +166,7 @@
   <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
   <java-symbol type="style" name="GlobalActionsAnimationXylon" />
   <java-symbol type="style" name="GlobalActionsAnimationCard" />
+  <java-symbol type="style" name="GlobalActionsAnimationRotate" />
 
   <!-- True if the notification's should dynamically tint the app icon and text -->
   <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
@@ -274,4 +272,31 @@
 
   <!-- App Lock -->
   <java-symbol type="string" name="lockscreen_pattern_instructions" />
+
+  <!-- OnePlus haptic motor -->
+  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
+  <!-- Pocket Lock -->
+  <java-symbol type="layout" name="pocket_lock_view" />
+
+  <!-- Pocket bridge -->
+  <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
+  <java-symbol type="bool" name="config_pocketModeSupported" />
+
+  <!-- Pocket Service -->
+  <java-symbol type="string" name="config_pocketJudgeVendorProximitySensorName" />
+  <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
+
+  <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
+
+  <!-- Path to fast charging status file to detect whether an oem fast charger is active -->
+  <java-symbol type="string" name="config_oemFastChargerStatusPath" />
+
+  <!-- Expected value from fast charging status file -->
+  <java-symbol type="string" name="config_oemFastChargerStatusValue" />
+
 </resources>

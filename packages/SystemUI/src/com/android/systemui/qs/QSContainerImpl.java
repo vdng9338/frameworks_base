@@ -109,7 +109,11 @@ public class QSContainerImpl extends FrameLayout {
 
     private ViewGroup mBackground;
     private ImageView mQsBackgroundImage;
+    private View mBackgroundGradient;
+    private View mStatusBarBackground;
     private Drawable mQsBackGround;
+    private int mQsBgNewEnabled;
+    private int mQsHeaderBgNew;
 
     private int mSideMargins;
     private boolean mQsDisabled;
@@ -120,6 +124,7 @@ public class QSContainerImpl extends FrameLayout {
     private int mQsBackGroundAlpha;
     private int mCurrentColor;
     private Drawable mQsHeaderBackGround;
+    private Drawable mSbHeaderBackGround;
     private boolean mQsBackgroundBlur;
     private boolean mQsBackGroundType;
 
@@ -150,9 +155,12 @@ public class QSContainerImpl extends FrameLayout {
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mBackground = findViewById(R.id.quick_settings_background);
         mQsBackgroundImage = findViewById(R.id.qs_image_view);
-        updateResources();
+        mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
+        mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
+        mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+        updateResources();
         updateSettings();
         mHeader.getHeaderQsPanel().setMediaVisibilityChangedListener((visible) -> {
             if (mHeader.getHeaderQsPanel().isShown()) {
@@ -186,6 +194,7 @@ public class QSContainerImpl extends FrameLayout {
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        setBackgroundGradientVisibility(newConfig);
         updateResources();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
     }
@@ -212,6 +221,12 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.DISPLAY_CUTOUT_MODE), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NEW_BG_ENABLED), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_NEW_BG), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -234,6 +249,10 @@ public class QSContainerImpl extends FrameLayout {
                 Settings.System.QS_PANEL_BG_ALPHA, 255, UserHandle.USER_CURRENT);
         mImmerseMode = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
+        mQsBgNewEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT);
+        mQsHeaderBgNew = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_HEADER_NEW_BG, 0, UserHandle.USER_CURRENT);
         post(new Runnable() {
             public void run() {
                 setQsBackground();
@@ -259,23 +278,83 @@ public class QSContainerImpl extends FrameLayout {
         }
         if (currentImage != null && mQsBackGroundType) {
             int width = mQSPanel.getWidth();
-            int height = mQSPanel.getHeight() + mDragHandle.getHeight();
+            int height = mQSPanelContainer.getHeight() + mDragHandle.getHeight();
+            int corner = getContext().getResources().getDimensionPixelSize(R.dimen.qs_corner_radius);
 
             Bitmap bitmap = mQsBackgroundBlur ? XImageUtils.getBlurredImage(mContext, currentImage.getBitmap()) : currentImage.getBitmap();
             Bitmap toCenter = XImageUtils.scaleCenterCrop(bitmap, width, height);
             BitmapDrawable bDrawable = new BitmapDrawable(mContext.getResources(),
-                            XImageUtils.getRoundedCornerBitmap(toCenter, 15, width, height, mCurrentColor));
+                            XImageUtils.getRoundedCornerBitmap(toCenter, corner, width, height, mCurrentColor));
 
             mQsBackGround = new InsetDrawable(bDrawable, 0, 0, 0, mContext.getResources().getDimensionPixelSize(com.android.internal.R.dimen.qs_background_inset));
 
             mBackground.setBackground(mQsBackGround);
             mBackground.setClipToOutline(true);
         } else {
-            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+	    if (!mQsBackGroundType) {
+		switch(mQsBgNewEnabled) {
+			// Accent Bottom
+	               case 1:
+		            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
+			    break;
+			// Gradient Bottom
+		       case 2:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
+			    break;
+			// Reverse Gradient Bottom
+		       case 3:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
+			    break;
+                        // Accent Border
+                       case 4:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
+                            break;
+                        // Gradient Border
+                       case 5:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
+                            break;
+                        // Reverse Gradient Border
+                       case 6:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
+                            break;
+		        // Default Black
+		       default:
+		       case 0:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+		            break;
+                }
+            }
+	}
+        switch(mQsHeaderBgNew) {
+               // Accent Border
+            case 1:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_accent_brdr);
+                break;
+               // Gradient Border
+            case 2:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_grad_brdr);
+                break;
+               // Reverse Gradient Border
+            case 3:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_rev_grad_brdr);
+                break;
+            default:
+            case 0:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
+                break;
         }
-        mBackground.setBackground(mQsBackGround);
-        mQsBackGround.setAlpha(mQsBackGroundAlpha);
+	mBackground.setBackground(mQsBackGround);
+        mStatusBarBackground.setBackground(mSbHeaderBackGround);
+	mQsBackGround.setAlpha(mQsBackGroundAlpha);
+        mStatusBarBackground.setAlpha(mQsBackGroundAlpha);
+        mSbHeaderBackGround.setAlpha(mQsBackGroundAlpha);
         mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
     }
 
@@ -344,6 +423,7 @@ public class QSContainerImpl extends FrameLayout {
         final boolean disabled = (state2 & DISABLE2_QUICK_SETTINGS) != 0;
         if (disabled == mQsDisabled) return;
         mQsDisabled = disabled;
+        setBackgroundGradientVisibility(getResources().getConfiguration());
         mBackground.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
     }
 
@@ -450,6 +530,14 @@ public class QSContainerImpl extends FrameLayout {
                 + mHeader.getHeight();
     }
 
+    private void setBackgroundGradientVisibility(Configuration newConfig) {
+        if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
+            mBackgroundGradient.setVisibility(View.INVISIBLE);
+        } else {
+            mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
+        }
+    }
+
     public void setExpansion(float expansion) {
         mQsExpansion = expansion;
         mDragHandle.setAlpha(1.0f - expansion);
@@ -459,7 +547,8 @@ public class QSContainerImpl extends FrameLayout {
     private void updatePaddingsAndMargins() {
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            if (view == mQSCustomizer) {
+            if (view == mBackgroundGradient
+                    || view == mQSCustomizer) {
                 // Some views are always full width
                 continue;
             }

@@ -22,9 +22,13 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -37,6 +41,9 @@ import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
+
+import com.android.systemui.plugins.DarkIconDispatcher;
+import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
 public class QsHeaderWeatherImage extends ImageView implements
         OmniJawsClient.OmniJawsObserver {
@@ -54,6 +61,8 @@ public class QsHeaderWeatherImage extends ImageView implements
     private boolean mEnabled;
     private boolean mAttached;
     private boolean mWeatherInHeaderView;
+    private int mTintColor;
+    private int mWeatherIconColor;
 
     Handler mHandler;
 
@@ -72,8 +81,10 @@ public class QsHeaderWeatherImage extends ImageView implements
         mHandler = new Handler();
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
+        mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+        updateColor();
     }
 
     @Override
@@ -86,6 +97,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         super.onAttachedToWindow();
         mEnabled = mWeatherClient.isOmniJawsEnabled();
         mWeatherClient.addObserver(this);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         queryAndUpdateWeather();
     }
 
@@ -94,6 +106,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         super.onDetachedFromWindow();
         mWeatherClient.removeObserver(this);
         mWeatherClient.cleanupObserver();
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 
     class SettingsObserver extends ContentObserver {
@@ -107,14 +120,18 @@ public class QsHeaderWeatherImage extends ImageView implements
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-			        Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
-			        UserHandle.USER_ALL);
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_ICON_COLOR), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+            updateColor();
         }
     }
 
@@ -168,6 +185,28 @@ public class QsHeaderWeatherImage extends ImageView implements
             }
         } catch(Exception e) {
             // Do nothing
+        }
+    }
+
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
+        }
+        queryAndUpdateWeather();
+    }
+
+    private void updateColor() {
+        mWeatherIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_ICON_COLOR, 0xffffffff);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
         }
     }
 }
